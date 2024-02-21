@@ -11,7 +11,11 @@ const socket = require("socket.io");
 const app = express();
 require("dotenv").config();
 
-app.use(cors());
+app.use(cors({
+  origin:["https://deploy-chatapp-1whq.vercel.app"],
+  methods:["POST","GET"],
+  credentials:true
+}));
 app.use(express.json());
 
 // Import the userRoutes before connecting to MongoDB
