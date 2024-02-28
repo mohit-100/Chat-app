@@ -2,8 +2,8 @@
   "name": "chatapp-server",
   "version": "1.0.0",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "install-deps": "cd server && npm install && cd ../public && npm install",
+    "build": "cd public && npm run build"
   },
   "dependencies": {
     "express": "^4.18.2",
