@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build":"npm install && npm install --prefix public && npm run build --prefix public"
+    "build":"npm install --prefix public && npm run build --prefix public"
   },
   "author": "",
   "license": "ISC",
