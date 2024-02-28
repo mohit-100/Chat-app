@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const userRoutes = require("./router/uRoute"); 
 const messageRoute = require("./router/messageRoute")
 const socket = require("socket.io");
+const path = require('path')
 // Import userRoutes at the top
 // const authRoutes = require("./routes/auth");
 // const messageRoutes = require("./routes/messages");
@@ -12,15 +13,13 @@ const app = express();
 require("dotenv").config();
 
 app.use(cors({
-  origin:["https://deploy-chatapp-1whq.vercel.app"],
+  origin:["http://localhost:3000"],
   methods:["POST","GET"],
   credentials:true
 }));
 app.use(express.json());
 
 // Import the userRoutes before connecting to MongoDB
-app.use("/api/auth", userRoutes);
-app.use("/api/messages/",messageRoute);
 
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -35,6 +34,26 @@ mongoose.connect(process.env.MONGO_URL, {
 
 // app.use("/api/messages", messageRoutes);
 
+app.use("/api/auth", userRoutes); // assuming userRoutes handles authentication
+app.use("/api/messages", messageRoute); // assuming messageRoute handles messages
+
+
+
+const __dirname1 = path.resolve(__dirname, '..'); // Assuming your server file is in the 'server' directory
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "public", "build")));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname1, 'public', 'build', 'index.html'));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.send("API is Running Successfully");
+  });
+}
+
+
+  //--------------------Deployment----------------- 
  const server = app.listen(process.env.PORT, () =>
   console.log(`Server started on ${process.env.PORT}`)
 );

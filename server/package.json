@@ -1,11 +1,12 @@
 {
-  "name": "server",
+  "name": "chat-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "build":"npm install && npm install --prefiix public && npm run build --prefiix public"
   },
   "author": "",
   "license": "ISC",
